@@ -125,11 +125,29 @@ from PIL import Image
 
 
 #############################################################
+# # Text Input
+# fname = st.text_input("Enter your name: ", max_chars = 10)
+# st.title(fname.upper())
 
+# # Password Style
+# password = st.text_input("Password: ", type = 'password')
 
+# # Text Area 
+# message = st.text_area("Enter a message: ", height = 500)
+# st.write(message)
 
+# # Number Input
+# num = st.number_input("Enter a number: ", 1.0, 25.0)
+# st.write(num)
 
+# # Date Input
+# appointment = st.date_input("Appointment: ")
 
+# # Time Input
+# mytime = st.time_input("My time: ")
+
+# Color Picker
+color = st.color_picker("Select color:")
 
 
 
