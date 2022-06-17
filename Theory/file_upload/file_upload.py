@@ -1,7 +1,13 @@
+from curses import raw
 from re import I
 import streamlit as st
 from PIL import Image
 import pandas as pd
+import docx2txt
+import textract
+from PyPDF2 import PdfFileReader
+import pdfplumber
+
 
 
 @st.cache
@@ -46,8 +52,26 @@ def main():
                                 'filesize': docx_file.size}
                 st.write(file_details)
                 if docx_file.type == "text/plain":
-                    raw_text = docx_file.read()
+                    # raw_text = docx_file.read()
+                    # st.write(raw_text)
+                    # st.text(raw_text)
+
+                    raw_text = str(docx_file.read(), 'utf-8')
                     st.write(raw_text)
+
+                elif docx_file.type == "application/pdf":
+                    try:
+                        with pdfplumber.open(docx_file) as pdf:
+                            pages = pdf.pages[0]
+                            st.write(pages.extract_text())
+                    except:
+                        st.write('None')
+
+                else:
+                    raw_text = docx2txt.process(docx_file)
+                    st.write(raw_text)
+                    # st.text(raw_text)
+
 
     else:
         st.subheader('About')
