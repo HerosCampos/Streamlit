@@ -7,6 +7,7 @@ import docx2txt
 import textract
 from PyPDF2 import PdfFileReader
 import pdfplumber
+import os
 
 
 
@@ -14,6 +15,12 @@ import pdfplumber
 def load_image(image_file):
     img = Image.open(image_file)
     return img
+
+
+def save_uploaded_file(uploadedfile):
+    with open(os.path.join("tempDir", uploadedfile.name), "wb") as f:
+        f.write(uploadedfile.getbuffer())
+    return st.success(f'Saved file {uploadedfile.name} in tempDir')
 
 
 def main():
@@ -34,6 +41,10 @@ def main():
             st.write(file_details)
             st.image(load_image(image_file), width = 250)
 
+            with open(image_file.name, "wb") as f:
+                f.write(image_file.getbuffer())
+            st.success("File Saved")
+
     elif choice == 'Dataset':
         st.subheader('Dataset')
         data_file = st.file_uploader('Upload CSV', type = ['csv'])
@@ -41,6 +52,7 @@ def main():
             st.write(type(data_file))
             df = pd.read_csv(data_file)
             st.dataframe(df)
+            save_uploaded_file(data_file)
 
     elif choice == 'DocumentFiles':
         st.subheader('DocumentFiles')
