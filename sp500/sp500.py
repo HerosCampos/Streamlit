@@ -7,7 +7,7 @@ import numpy as np
 import yfinance as yf
 
 
-st.title("S&P 500 App")
+st.title("S&P 500 App.")
 
 
 st.markdown("""
